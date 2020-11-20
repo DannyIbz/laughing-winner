@@ -13,21 +13,42 @@ const btnNew = document.querySelector(".btn--new");
 const btnRoll = document.querySelector(".btn--roll");
 const btnHold = document.querySelector(".btn--hold");
 
+let scores, currentScore, activePlayer, playing;
+
 // Starting conditions
-score0El.textContent = 0;
-score1El.textContent = 0;
-diceEl.classList.add("hidden");
+const init = function () {
+  // Scores acumulating per player
+  scores = [0, 0];
 
-// Scores acumulating per player
-const scores = [0, 0];
+  // Persist value of dice
+  currentScore = 0;
 
-// Persist value of dice
-let currentScore = 0;
+  // Which player turn is
+  activePlayer = 0;
 
-// Which player turn is
-let activePlayer = 0;
+  playing = true;
 
-let playing = true;
+  score0El.textContent = 0;
+  score1El.textContent = 0;
+  // document.getElementById(`score--0`).textContent = 0;
+  // document.getElementById(`score--1`).textContent = 0;
+  score0El.textContent = 0;
+  score1El.textContent = 0;
+  // document.getElementById("current--0").textContent = 0;
+  // document.getElementById("current--1").textContent = 0;
+  current0El.textContent = 0;
+  current1El.textContent = 0;
+  // document.querySelector(`.player--0`).classList.add("player--active");
+  // document.querySelector(`.player--1`).classList.remove("player--active");
+  diceEl.classList.add("hidden");
+  player0El.classList.add("player--active");
+  player1El.classList.remove("player--active");
+  // document.querySelector(".player--0").classList.remove("player--winner");
+  // document.querySelector(".player--1").classList.remove("player--winner");
+  player0El.classList.remove("player--winner");
+  player1El.classList.remove("player--winner");
+};
+init();
 
 const switchPlayer = function () {
   document.getElementById(`current--${activePlayer}`).textContent = 0;
@@ -71,7 +92,7 @@ btnHold.addEventListener("click", function () {
       scores[activePlayer];
 
     // 2. Check if player's score is >= 100
-    if (scores[activePlayer] >= 20) {
+    if (scores[activePlayer] >= 100) {
       // Finish the game
       playing = false;
       diceEl.classList.add("hidden");
@@ -88,15 +109,4 @@ btnHold.addEventListener("click", function () {
   }
 });
 
-btnNew.addEventListener("click", function () {
-  // Reset the game to starter values
-  diceEl.classList.add("hidden");
-  document.getElementById(`score--0`).textContent = 0;
-  document.getElementById(`score--1`).textContent = 0;
-  document.querySelector(`.player--0`).classList.add("player--active");
-  document.querySelector(`.player--1`).classList.remove("player--active");
-  document.querySelector(".player--0").classList.remove("player--winner");
-  document.querySelector(".player--1").classList.remove("player--winner");
-  document.getElementById("current--0").textContent = 0;
-  document.getElementById("current--1").textContent = 0;
-});
+btnNew.addEventListener("click", init);
